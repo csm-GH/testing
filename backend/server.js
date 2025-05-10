@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const connection = require('./connect');       // Important: Import the MySQL connection for direct queries
+const connection = require('./connect');       // Import the MySQL connection for direct queries
 const create = require('./init');              // Module to create tables
 const insert = require('./insert');            // Insert functions
 const update = require('./update');            // Update functions (if used externally)
@@ -29,6 +29,7 @@ create.createOrdersTable();
 create.createOrderItemsTable();
 create.createCategoryTypeTable();
 create.createCategoryItemTable();
+create.createLicenseTable();
 
 // ---------------- GET ENDPOINTS ----------------
 
@@ -84,7 +85,8 @@ app.get('/api/products', (req, res) => {
         product.ProductImageURL = `data:image/png;base64,${Buffer.from(
           product.ProductImage
         ).toString("base64")}`;
-      else product.ProductImageURL = null;
+      else 
+        product.ProductImageURL = null;
       res.status(200).json(product);
     });
   } else if (name) {
@@ -102,7 +104,8 @@ app.get('/api/products', (req, res) => {
           product.ProductImageURL = `data:image/png;base64,${Buffer.from(
             product.ProductImage
           ).toString("base64")}`;
-        else product.ProductImageURL = null;
+        else 
+          product.ProductImageURL = null;
         return product;
       });
       res.status(200).json(updated);
@@ -121,7 +124,8 @@ app.get('/api/products', (req, res) => {
           product.ProductImageURL = `data:image/png;base64,${Buffer.from(
             product.ProductImage
           ).toString("base64")}`;
-        else product.ProductImageURL = null;
+        else 
+          product.ProductImageURL = null;
         return product;
       });
       res.status(200).json(updated);
@@ -302,6 +306,28 @@ app.post('/api/category-item', (req, res) => {
   });
 });
 
+// 7) Insert License Endpoint
+// Expects JSON body: { "license": "<20_char_string>" }
+app.post('/api/license', (req, res) => {
+  const { license } = req.body;
+  
+  // Trim the value and validate that it's exactly 20 characters.
+  if (!license || license.trim().length !== 20) {
+    return res.status(400).json({ error: "License must be exactly 20 characters long." });
+  }
+  
+  const trimmedLicense = license.trim();
+  
+  // Use the insertLicense function from insert.js
+  insert.insertLicense(trimmedLicense, (err, insertedLicense) => {
+    if (err) {
+      console.error("Insert License Error:", err);
+      return res.status(500).json({ error: "Error inserting license", details: err.message });
+    }
+    res.status(201).json({ message: "License inserted successfully", license: insertedLicense });
+  });
+});
+
 // ---------------- UPDATE ENDPOINTS ----------------
 
 // 1) Update User Information
@@ -386,8 +412,6 @@ app.put('/api/products/update', upload.single('ProductImage'), (req, res) => {
 });
   
 // ---------------- DELETE ENDPOINTS ----------------
-
-// IMPORTANT: Place the "byCredentials" route before the generic /:id route.
 
 // Delete User by Credentials
 app.delete('/api/users/byCredentials', (req, res) => {

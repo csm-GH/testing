@@ -1,6 +1,6 @@
 const connection = require('./connect'); // Import the MySQL connection
 
-/**
+/*
  * Retrieves all users from the Users table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -15,7 +15,7 @@ const getAllUsers = (callback) => {
   });
 };
 
-/**
+/*
  * Retrieves a single user by UserID.
  * @param {number} userID - The unique UserID.
  * @param {Function} callback - callback function (error, result)

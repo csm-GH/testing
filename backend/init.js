@@ -125,6 +125,32 @@ const createCategoryItemTable = () => {
     });
 };
 
+/*
+ * Creates the License table.
+ * This table has:
+ *  - LicenseID: An auto-incrementing primary key.
+ *  - LicenseCode: A VARCHAR(20) column that must be exactly 20 characters long and is UNIQUE.
+ *  - CHECK constraint ensures the license length is 20 characters.
+ */
+const createLicenseTable = () => {
+  const query = `
+    CREATE TABLE IF NOT EXISTS License (
+      LicenseCode VARCHAR(20) NOT NULL UNIQUE,
+      CHECK (CHAR_LENGTH(LicenseCode) = 20)
+    );
+  `;
+  
+  connection.query(query, (err) => {
+    if (err) {
+      console.error("Error creating License table:", err);
+    } else {
+      console.log("License table created or already exists.");
+    }
+  });
+};
+
+
+
 
 // Export functions
 module.exports = { 
@@ -133,5 +159,6 @@ module.exports = {
     createOrdersTable,
     createOrderItemsTable,
     createCategoryTypeTable,
-    createCategoryItemTable
+    createCategoryItemTable,
+    createLicenseTable
 };
