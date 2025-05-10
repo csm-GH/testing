@@ -35,7 +35,7 @@ const getUserById = (userID, callback) => {
   });
 };
 
-/**
+/*
  * Retrieves all products from the Products table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -50,7 +50,7 @@ const getAllProducts = (callback) => {
   });
 };
 
-/**
+/*
  * Retrieves a single product by ProductID.
  * @param {number} productID - The unique ProductID.
  * @param {Function} callback - callback function (error, result)
@@ -69,7 +69,7 @@ const getProductById = (productID, callback) => {
   });
 };
 
-/**
+/*
  * Retrieves all orders from the Orders table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -84,7 +84,7 @@ const getAllOrders = (callback) => {
   });
 };
 
-/**
+/*
  * Retrieves all order items from the Order_Items table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -99,7 +99,7 @@ const getAllOrderItems = (callback) => {
   });
 };
 
-/**
+/*
  * Retrieves all category types from the Category_type table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -114,7 +114,7 @@ const getAllCategoryTypes = (callback) => {
   });
 };
 
-/**
+/*
  * Retrieves all category items from the Category_item table.
  * @param {Function} callback - callback function (error, results)
  */
@@ -129,6 +129,24 @@ const getAllCategoryItems = (callback) => {
   });
 };
 
+
+/*
+ * Retrieves all licenses from the License table.
+ *  callback - Callback function (error, licenses).
+ */
+const getAllLicenses = (callback) => {
+  const sql = "SELECT * FROM License";
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error("Error fetching licenses:", err);
+      return callback(err, null);
+    }
+    callback(null, results);
+  });
+};
+
+
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -137,5 +155,6 @@ module.exports = {
   getAllOrders,
   getAllOrderItems,
   getAllCategoryTypes,
-  getAllCategoryItems
+  getAllCategoryItems,
+  getAllLicenses
 };

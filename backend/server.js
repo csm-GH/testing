@@ -213,6 +213,20 @@ app.get('/api/category-items', (req, res) => {
   }
 });
 
+// GET All Licenses Endpoint
+app.get('/api/licenses', (req, res) => {
+  get.getAllLicenses((err, licenses) => {
+    if (err) {
+      return res.status(500).json({ 
+        error: "Error fetching licenses", 
+        details: err.message 
+      });
+    }
+    res.status(200).json(licenses);
+  });
+});
+
+
 // ---------------- INSERT ENDPOINTS ----------------
 
 // 1) Insert New User
