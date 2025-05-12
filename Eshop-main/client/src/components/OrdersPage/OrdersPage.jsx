@@ -8,11 +8,11 @@ export default function MyOrdersPage({ userName, onLogout }) {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
-  // 获取当前用户订单
+  // get user orders
   useEffect(() => {
     const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     if (!userInfo?.userId) {
-      message.warning('请先登录');
+      message.warning('Please log in first');
       navigate('/login');
       return;
     }
@@ -22,15 +22,15 @@ export default function MyOrdersPage({ userName, onLogout }) {
     })
     .then(res => {
       if (res.status !== 200) {
-        message.error('获取订单失败，请稍后重试');
+        message.error('Failed to obtain order, please try again later');
         return;
       }
       setOrders(res.data);
       console.log('object :>> ', res.data);
     })
     .catch(err => {
-      message.error('获取订单失败，请稍后重试');
-      console.error('订单获取错误:', err);
+      message.error('Failed to obtain order, please try again later');
+      console.error('Order acquisition error:', err);
     });
   }, [navigate]);
 
@@ -39,7 +39,7 @@ export default function MyOrdersPage({ userName, onLogout }) {
     navigate('/login', { replace: true });
   };
 
-  // 格式化时间
+ 
   const formatTime = (timeStr) => {
     return new Date(timeStr).toLocaleString('zh-CN', { 
       year: 'numeric', 
@@ -71,18 +71,6 @@ export default function MyOrdersPage({ userName, onLogout }) {
                   <span className="order-id">OrderID：{order.OrderID}</span>
                   <span className="order-time">{formatTime(order.OrderDate)}</span>
                 </div>
-                {/* <div className="order-products">
-                  {order.products.map(product => (
-                    <div key={product.ProductID} className="product-info">
-                      <img src={product.image} alt={product.title} className="product-image" />
-                      <div className="product-details">
-                        <h4 className="product-title">{product.title}</h4>
-                        <p className="product-price">单价：¥{product.price.toFixed(2)}</p>
-                        <p className="product-quantity">数量：{product.Number}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div> */}
                 <div className="order-products">
                   <div key={order.ProductID} className="product-info">
                     <img src={order.ProductImageURL} alt={order.ProductName} className="product-image" />

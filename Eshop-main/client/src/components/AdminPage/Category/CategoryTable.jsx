@@ -15,25 +15,25 @@ export default function ProductTable({ }) {
     getCategoryList();
   }, []);
 
-  // 获取分类列表
+
   const getCategoryList = () => {
     axios.get('http://localhost:3001/api/category-types')
     .then(response => {
-      console.log("分类信息获取成功", response.data);
+      console.log("Successfully obtained classified information", response.data);
       setCategoryList(response.data);
     })
     .catch(error => {
-      console.error("分类信息获取失败", error);
-      message.error('分类加载失败，请稍后重试');
+      console.error("Failed to obtain classified information", error);
+      message.error('Category loading failed, please try again later');
     });
   };
   
-  // 跳转到添加分类页面
+
   const gotoAddCategory = () => {
     navigate('/admin/add-category'); 
   };
 
-  // 删除分类
+
   const removeProduct = (productId) => {
     axios.delete(`http://localhost:3001/api/category-types/${productId}`)
     .then(response => {
@@ -41,17 +41,15 @@ export default function ProductTable({ }) {
       getCategoryList();
     })
     .catch(error => {
-      console.error("删除失败", error);
-      message.error("删除失败，请稍后重试");
+      console.error("Deletion failed", error);
+      message.error("Deletion failed, please try again later");
     });
   };
   const categories = Array.from(new Set(categoryList.map(p => p.category)));
 
-  // 过滤分类（根据分类和搜索词）
+
   const filteredCategoryList = categoryList.filter(category => {
     const categoryMatch = selectedCategories.size === 0 || selectedCategories.has(category.typeName);
-    // const searchMatch = category.typeName.toLowerCase().includes(searchTerm.toLowerCase());
-    // return categoryMatch && searchMatch;
     return categoryMatch;
   });
 
@@ -99,7 +97,7 @@ export default function ProductTable({ }) {
         </tbody>
       </table>
       {categoryList.length === 0 && (
-        <div className="mt-4 text-center">暂无数据</div>
+        <div className="mt-4 text-center">No data</div>
       )}
     </main>
   );

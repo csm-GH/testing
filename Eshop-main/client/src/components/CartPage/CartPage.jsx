@@ -15,24 +15,23 @@ export default function CartPage({ userName, onLogout, cartItems, removeFromCart
   
   const handleCheckout = async() => {
     if (cartItems.length === 0) {
-      message.warning('购物车为空，无法结算');
+      message.warning('The shopping cart is empty and cannot be checked out.');
       return;
     }
 
-    // 检查库存
+    // check stock
     const outOfStockItems = cartItems.filter(item => item.quantity > item.stock);
     if (outOfStockItems.length > 0) {
-      message.error(`以下商品库存不足：${outOfStockItems.map(item => item.title).join(', ')}`);
+      message.error(`Products are out of stock：${outOfStockItems.map(item => item.title).join(', ')}`);
       return;
     }
 
 
     try {
-      // 这里可以添加实际的结算逻辑（如调用API）
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
 
-      // 假设结算成功后清空购物车
+      // assume clear cart
       const promise = new Promise((resolve, reject) => {
         try {
           cartItems.forEach(async item => {
@@ -52,7 +51,7 @@ export default function CartPage({ userName, onLogout, cartItems, removeFromCart
         }
       })
       promise.then(() => {
-        // 清空购物车
+        // clear cart
         cartItems.forEach(item => {
           removeFromCart(item.id);
         })
@@ -61,8 +60,8 @@ export default function CartPage({ userName, onLogout, cartItems, removeFromCart
 
      
     } catch (error) {
-      message.error('网络请求失败，请稍后重试');
-      console.error('结算错误:', error);
+      message.error('The network request failed, please try again later');
+      console.error('Checkout error:', error);
       return;
     }
 
@@ -90,7 +89,7 @@ export default function CartPage({ userName, onLogout, cartItems, removeFromCart
                   <img src={item.image} alt={item.title} className="item-image" />
                   <div className="item-details">
                     <h3 className="item-title">{item.title}</h3>
-                    <p className="item-price">单价：${item.price.toFixed(2)}</p>
+                    <p className="item-price">Price：${item.price.toFixed(2)}</p>
                   </div>
                 </div>
                 <div className="item-quantity">

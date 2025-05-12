@@ -15,25 +15,24 @@ export default function ProductTable({ }) {
     getProductList();
   }, []);
 
-  // 获取产品列表
+
   const getProductList = () => {
     axios.get('http://localhost:3001/api/products')
     .then(response => {
-      console.log("商品信息获取成功", response.data);
+      console.log("Product information obtained successfully", response.data);
       setProducts(response.data);
     })
     .catch(error => {
-      console.error("商品信息获取失败", error);
-      message.error('商品加载失败，请稍后重试');
+      console.error("Failed to obtain product information", error);
+      message.error('Product loading failed, please try again later');
     });
   };
   
-  // 跳转到添加商品页面
+  
   const gotoAddProduct = () => {
     navigate('/admin/add-product'); 
   };
 
-  // 删除商品
   const removeProduct = (productId) => {
     axios.delete(`http://localhost:3001/api/products/${productId}`)
     .then(response => {
@@ -41,13 +40,12 @@ export default function ProductTable({ }) {
       getProductList();
     })
     .catch(error => {
-      console.error("删除失败", error);
-      message.error("删除失败，请稍后重试");
+      console.error("Deletion failed", error);
+      message.error("Deletion failed, please try again later");
     });
   };
   const categories = Array.from(new Set(products.map(p => p.category)));
 
-  // 过滤商品（根据分类和搜索词）
   const filteredProducts = products.filter(product => {
     const categoryMatch = selectedCategories.size === 0 || selectedCategories.has(product.category);
     const searchMatch = product.ProductName.toLowerCase().includes(searchTerm.toLowerCase());

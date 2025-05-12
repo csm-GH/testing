@@ -14,7 +14,7 @@ export default function ProductInfoPage({ userName, onLogout, addToCart }) {
     getProductInfo();
   }, [productId, navigate]);
 
-  // 获取产品信息
+  // get product info from server
   const getProductInfo = async() => {
     try {
       const response = await axios.get(`http://localhost:3001/api/products`, {
@@ -31,13 +31,13 @@ export default function ProductInfoPage({ userName, onLogout, addToCart }) {
           description: response.data.ProductDescription,
           // image: response.data.ProductImage
         }
-        setProduct(product); // 假设接口返回结构为 { success: true, product: { ... } }
+        setProduct(product); 
       } else {
-        message.error(response.data.msg || '商品信息获取失败');
+        message.error(response.data.msg || 'Failed to obtain product information');
       }
     } catch (error) {
-      message.error('网络请求失败，请稍后重试');
-      console.error('获取商品详情错误:', error);
+      message.error('The network request failed, please try again later');
+      console.error('Error in getting product details:', error);
     }
   }
 
@@ -89,7 +89,7 @@ export default function ProductInfoPage({ userName, onLogout, addToCart }) {
               }}
               className="quantity-input"
             />
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={handleAddToCart}>Add</button>
           </div>
 
           <Link to="/" className="back-link">← Back to Products</Link>

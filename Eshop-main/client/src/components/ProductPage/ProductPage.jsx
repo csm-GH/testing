@@ -26,9 +26,9 @@ export default function ProductPage({ userName, onLogout, addToCart }) {
     getCategoryList();
   }, []);
 
-  // 获取商品分类
+  // get product category list
   const getCategoryList = () => {
-    console.log("开始获取商品分类信息");
+    console.log("Getting product classification information");
     axios.get('http://localhost:3001/api/category-types')
     .then(response => {
       const data = response.data;
@@ -36,18 +36,18 @@ export default function ProductPage({ userName, onLogout, addToCart }) {
         id: item.TypeID,
         title: item.TypeName,
       }));
-      console.log("格式化后的商品分类信息", formattedData);
-      setCategoryList(formattedData); // 将接口返回的商品数据设置到状态中
+      console.log("Formatted product category information", formattedData);
+      setCategoryList(formattedData); 
     })
     .catch(error => {
-      console.error("商品信息获取失败", error);
-      setError('商品加载失败，请稍后重试')
+      console.error("Failed to obtain product information", error);
+      setError('Product loading failed, please try again later')
     });
   }
 
-  // 获取商品信息
+  // get product list
   const getProductList = () => {
-    console.log("开始获取商品信息");
+    console.log("Getting product information");
     axios.get('http://localhost:3001/api/products')
       .then(response => {
         const data = response.data;
@@ -60,21 +60,14 @@ export default function ProductPage({ userName, onLogout, addToCart }) {
           stock: item.ProductStock,
           image: item.ProductImageURL,
         }));
-        console.log("格式化后的数据", formattedData);
-        setProducts(formattedData); // 将接口返回的商品数据设置到状态中
+        console.log("Formatted data", formattedData);
+        setProducts(formattedData); 
       })
       .catch(error => {
-        console.error("商品信息获取失败", error);
-        setError('商品加载失败，请稍后重试')
+        console.error("Failed to obtain product information", error);
+        setError('Product loading failed, please try again later')
       });
   }
-
-  // const getGreeting = (userName) => {
-  //   console.log("获取用户信息")
-  //   axios.get('http://localhost:3001/products').then((data) => {
-  //     console.log(data);
-  //   });
-  // };
 
   const handleAddToCart = (product) => {
     const quantityToAdd = quantities[product.id] || 1;
@@ -97,7 +90,7 @@ export default function ProductPage({ userName, onLogout, addToCart }) {
     });
   };
 
-  // 退出登录
+  // Logout
   const handleLogout = () => {
     
     onLogout();
@@ -165,8 +158,7 @@ export default function ProductPage({ userName, onLogout, addToCart }) {
                 </Link>
               
                 <div className="add-to-cart">
-                  {/* TODO: notify the user the item has been added successfully */}
-                  <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                  <button onClick={() => handleAddToCart(product)}>Add</button>
                   <input
                     type="number"
                     min="1"

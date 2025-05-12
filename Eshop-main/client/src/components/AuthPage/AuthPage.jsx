@@ -19,9 +19,8 @@ export default function AuthPage({ onLogin }) {
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  // 用户登录
+  // user login
   const login = () => {
-    // 检查用户名和密码是否匹配
     axios.get('http://localhost:3001/api/users/login', {
       params: {
         username: formData.username,
@@ -31,32 +30,24 @@ export default function AuthPage({ onLogin }) {
     .then(response => {
       if (response.data.length > 0) {
         sessionStorage.setItem('userName', formData.username);
-
-        // sessionStorage.setItem('userId', response.data[0].UserID);
-
         const userInfo = {
           userId: response.data[0].UserID,
           username: formData.username,
         }
         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
         onLogin(userInfo.username);
-        // if (userInfo.isAdmin) {
-        //   navigate('/adminPage', { replace: true });
-        // } else {
-        //   navigate('/productPage', { replace: true });
-        // }
 
       } else {
-        setError(response.data.msg || '登录失败');
+        setError(response.data.msg || 'Login failed');
       }
     })
     .catch(error => {
-      setError('网络错误，请稍后重试');
-      console.error('登录错误:', error);
+      setError('Network error, please try again later');
+      console.error('Login error:', error);
     });
   }
 
-  // 用户注册
+  // user registration
   const register = () => {
     axios.post('http://localhost:3001/api/users', {
       username: formData.username,
@@ -67,12 +58,12 @@ export default function AuthPage({ onLogin }) {
       if (response.data.userId) {
         login();
       } else {
-        setError(response.data.msg || '注册失败');
+        setError(response.data.msg || 'Registration failed');
       }
     })
     .catch(error => {
-      setError('网络错误，请稍后重试');
-      console.error('注册错误:', error);
+      setError('Network error, please try again later');
+      console.error('Registration Error:', error);
     });
   }
 
@@ -98,18 +89,6 @@ export default function AuthPage({ onLogin }) {
       <div className="container">
         <h2>{isLogin ? 'Login' : 'Register'}</h2>
         <form className="form" onSubmit={handleSubmit}>
-          {/* {!isLogin && (
-            <label>
-              License Key:
-              <input
-                type="text"
-                name="licenseKey"
-                value={formData.licenseKey}
-                onChange={handleChange}
-                required={!isLogin}
-              />
-            </label>
-          )} */}
           <label>
             Username:
             <input

@@ -20,8 +20,7 @@ function App() {
   
 
   useEffect(() => {
-    // 检查localStorage中是否有用户信息
-
+    //check user info in sessionStorage
       const sessionUserId = sessionStorage.getItem('userId');
       const sessionUserName = sessionStorage.getItem('userName');
       const sessionIsAdmin = sessionStorage.getItem('isAdmin');
@@ -34,20 +33,20 @@ function App() {
 
   }, []);
 
-  // 加入购物车功能
+  // Add to cart function
   const addToCart = (product, quantity = 1) => {
     setCart(prevCart => {
       const existing = prevCart.find(item => item.id === product.id);
       if (existing) {
         const newQuantity = Math.min(existing.quantity + quantity, 50);
-        message.success(`加入购物车成功`);
+        message.success(`Add to cart successfully`);
         return prevCart.map(item =>
           item.id === product.id ? { ...item, quantity: newQuantity } : item
         );
       } else {
-        message.success(`加入购物车成功`);
+        message.success(`Add to cart successfully`);
         if (quantity > 50) {
-          message.warning('您最多只能购买50件该商品');
+          message.warning('You can only purchase a maximum of 50 items of this product');
           return prevCart;
         }
         return [...prevCart, { ...product, quantity: Math.min(quantity, 50) }];
@@ -55,12 +54,12 @@ function App() {
 
     });
   };
-  // 移除购物车中的商品
+ // remove from cart function
   const removeFromCart = (productId) => {
     setCart(prevCart => prevCart.filter(item => item.id !== productId));
   };
 
-  // 更新购物车中商品的数量
+// update quantity function
   const updateQuantity = (productId, newQuantity) => {
     setCart(prevCart => prevCart.map(item =>
       item.id === productId? {...item, quantity: newQuantity } : item
@@ -105,7 +104,7 @@ function App() {
           ) : isAdmin ? (
             <Navigate to="/adminPage" replace />
           ) : (
-            <Navigate to="/productPage" replace />  // 首页路径，假设为 /productPage
+            <Navigate to="/productPage" replace />  // default to productPage
           )
         }
       />
@@ -115,7 +114,7 @@ function App() {
           !userName ? (  
             <Navigate to="/login" replace />
           ) :  (
-            <ProductPage userName={userName} onLogout={handleLogout} addToCart={addToCart} />  // 首页路径，假设为 /productPage
+            <ProductPage userName={userName} onLogout={handleLogout} addToCart={addToCart} />  // default to productPage
           )
         }
       />
@@ -139,7 +138,7 @@ function App() {
           )
         }
       />
-      {/* 购物车页面路由 */}
+      {/* Shopping cart page routing */}
       <Route
         path="/cart"
         element={
@@ -150,7 +149,6 @@ function App() {
               cartItems={cart} 
               removeFromCart={removeFromCart}
               updateQuantity={updateQuantity}
-              // 若需要移除/更新购物车功能，需补充对应的回调函数（如removeFromCart、updateQuantity）
             />
           ) : (
             <Navigate to="/login" replace />
