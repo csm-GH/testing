@@ -1,0 +1,135 @@
+.my-orders-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: var(--primary-green);
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding-bottom: 8px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.greeting {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  background-color: var(--primary-blue);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: var(--secondary-blue);
+}
+
+.back-link {
+  font-size: 1rem;
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.orders-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.empty-orders {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 50px;
+}
+
+.orders-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.order-item {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  margin-bottom: 15px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.order-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-info {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 8px 0;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-title {
+  font-size: 1em;
+  font-weight: 600;
+  color: #222;
+}
+
+.product-price, .product-quantity {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.order-total {
+  margin-top: 12px;
+  text-align: right;
+  font-weight: 600;
+  color: #222;
+  font-size: 1.1em;
+}
